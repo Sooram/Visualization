@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="utf-8">
+    <title>Gender gap in Korea</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="d3-textwrap.min.js" type="text/javascript"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <style>
+    svg {
+      cursor: pointer;
+      /* pointer-events: bounding-box;
+      SVG2.0 이상에서 작동 */
+    }
+    .hover {
+        fill-opacity: .8;
+    }
+    #visualization-project {
+        margin-bottom: 64px;
+        height: 25px;
+        box-shadow: 0 3px 10px 0 rgba(93,93,93,.1);
+    }
+    #title-section {
+        text-align: center;
+        border-bottom: 1px dashed;
+    }
+    #title {
+        margin-top: 28px;
+        margin-bottom: 14px;
+        font-size: 46px;
+        font-weight: 700;
+        word-break: keep-all;
+    }
+    #title-sub {
+        font-size: 24px;
+        word-break: keep-all;
+    }
+    #writer {
+        margin: 40px auto;
+        font-size: 12px;
+        color: #4b4b4d;
+    }
+    #title-desc {
+        font-size: 14px;
+        color: #7a7a7a;
+        line-height: 1.7;
+        width: 55%;
+        text-align: left;
+        max-width: 600px;
+        min-width: 300px;
+        margin: 0 auto;
+        margin-bottom: 64px;
+    }
+    .index {
+        margin: 20px auto;
+    }
+    .index .name {
+        display: inline-block;
+        /* height: 42px; */
+        border: 1px solid;
+        border-radius: 42px;
+        text-align: center;
+        padding: 11px 24px;
+        background-color: #fff;
+        font-size: 16px;
+    }
+    .index .show {
+        cursor: pointer;
+        font-size: 17px;
+        width: 300px;
+        /* height: 50px; */
+        text-align: center;
+        padding: 12px 0;
+        border: 1px solid #000;
+        margin: 0 calc(50% - 75px);
+    }
+    .index .upper .index .bottom{
+        width: 94%;
+        margin: 20px auto;
+        text-align: left;
+        font-size: 17px;
+        line-height: 1.6;
+    }
+    .category {
+        width: 70%;
+        max-width: 600px;
+        min-width: 300px;
+        margin: 0 auto;
+    }
+    .index .bottom {
+        position: relative;
+        height: 140px;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div id='visualization-project'>2018-01 Visualization Final Report</div>
+        <section id='title-section'>
+            <figure id='title-image'>
+                <img src='images/title3.png' width='200' height='100'>
+            </figure>
+            <div id='title'>Gender gap in South Korea</div>
+            <div id='title-sub'>Gender inequality index of South Korea compared with those of other countries</div>
+            <div id='writer'>2012-10003 Sooram Kang</div>
+            <div id='title-desc'>
+                <p>
+                    2013년, 한국에는 최초로 여성 대통령이 취임했다. 
+                    여성 국회의원의 비율도 1996년 3%에서 2016년 17%로 큰 폭으로 증가했다(출처: 중앙선거관리위원회).
+                    또한 최근에는 미투 운동과 페미니즘 등 여성의 사회적 지위와 인권의 회복을 위한 운동이 확산되고 있다.
+                    실제로 2017년 많이 찾아본 국어사전 단어 2위가 '페미니스트'일 정도로 관심이 뜨겁다(출처: 네이버 사전).
+                </p>
+                <p>
+                    하지만 과연 한국 사회에서 양성 간의 격차는 충분히 줄어들었는가? 
+                    다른 나라들과 비교할 때 한국의 성 격차 지수는 어떠한가?
+                    세계 경제 포럼에서 발표한 세계 성 격차 지수 보고서의 내용을 바탕으로 한국의 성 격차 지수가 최근 십여 년 동안 어떻게 변화했는지,
+                    그리고 이는 한국과 경제, 사회, 문화적으로 닮은 나라들과 비교했을 때 어떠한지 알아보자.
+                </p>
+            </div>
+        </section>
+    </header>
+    <section class=category>
+        <article class=index>
+            <div class=name>Progress over time</div>
+            <div class=upper>
+                <p>
+                    다음은 우리나라의 연도별 성 격차 지수를 나타낸 그래프이다.
+                    대체적으로 양성 간의 평등한 정도가 조금씩 증가하고 있음을 알 수 있다.
+                </p>
+            </div>
+            <div id='progress'></div>
+            <div class=bottom>
+                <div class=show id=worldAvg>Compare with world average</div>
+                <p>
+                    그렇다면 세계의 성 격차 지수는 어떠할까? 세계 성 격차 지수의 평균과 비교해보자.
+                </p>
+            </div>
+        </article>       
+        <div id='progressAvg'></div>
+        <div id='koreaIndex'></div>
+        <article class=index>
+            <div class=name>GDP per capita</div>
+            <div class=upper>
+                <p>Which point do you think is representing Korea? Click and check each point.</p>
+            </div>
+            <div id='scatter1'></div>
+            <div class=bottom>
+                <div class=show id=GDPPC>Zoom Korea&neighboring points</div>
+                <div class=desc>
+                    <p>1인당 GDP와 성 격차 지수는 서유럽 국가들의 경우 어느 정도 상관 관계를 보이기는 하지만, 전체적으로는 명확한 상관 관계를 보이지 않는다. </p>
+                    <p>우리나라와 1인당 GDP가 비슷한 나라들과 비교할 때, 우리나라는 낮은 편에 속한다. 실제로 여성 인권 후진국이라 불리는 중동 국가들을 제외하고 가장 낮은 지수를 보인다.</p>
+                </div>
+            </div>
+        </article>
+        <article class=index>
+                <div class=name>GDP</div>
+                <div class=upper>
+                    <p>Which point do you think is representing Korea? Click and check each point.</p>
+                </div>
+                <div id='scatter2'></div>
+                <div class=show id=GDP>Zoom Korea&neighboring points</div>
+            </article>
+    </section>
+    
+    
+    <script src="index.js"></script>
+    <script src='circle.js'></script>
+    <script src='scatter2.js'></script>
+</body>
+</html>

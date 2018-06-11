@@ -1,0 +1,126 @@
+Country,Men,Women,Average,Age Gap,Year,Source
+Algeria,33.5,27.8,30.7,5.7,2006,Africa
+Angola,24.7,21.4,23.1,3.3,2001,Africa
+Benin[a],23.8,18.7,21.3,5.1,2006,Africa
+Burkina Faso[a],24.3,17.9,21.1,6.4,2010,Africa
+Burundi[a],23.6,20.3,22,3.3,2010,Africa
+Cape Verde[a],26.2,21.5,23.9,4.7,2010,Africa
+Cameroon[a],25.8,19,22.4,6.8,2011,Africa
+Central African Republic[a],23.3,17.4,20.4,5.9,1994-1995,Africa
+Chad[a],22.4,16,19.2,6.4,2004,Africa
+Comoros[a],25.6,20.4,23,5.2,1996,Africa
+Congo[a],25.1,21,23.1,4.1,2009,Africa
+Ivory Coast[a],26.7,19.5,23.1,7.2,2005,Africa
+Democratic Republic of the Congo[a],24.2,19,21.6,5.2,2007,Africa
+Egypt,33.6,27.9,30.8,5.7,1996,Africa
+Eritrea[a],24.7,17.4,21.1,7.3,1995,Africa
+Ethiopia[a],23.9,17.4,20.7,6.5,2011,Africa
+Gabon[a],24.7,20.4,22.6,4.3,2000,Africa
+Ghana[a],25.7,21,23.4,4.7,2008,Africa
+Guinea[a],24.6,16.5,20.6,8.1,2005,Africa
+Kenya[a],24.8,20.2,22.5,4.6,2008-2009,Africa
+Lesotho[a],25.5,20.9,23.2,4.6,2009,Africa
+Liberia[a],23.4,18.9,21.2,4.5,2007,Africa
+Libya,32,29.2,30.6,2.8,1995,Africa
+Madagascar[a],22.3,18.4,20.4,3.9,2008,Africa
+Malawi[a],22.3,17.9,20.1,4.4,2010,Africa
+Mali[a],24.1,16.7,20.4,7.4,2006,Africa
+Mauritania[a],27.1,19,23.1,8.1,2000-2001,Africa
+Mauritius,29.8,25.4,27.6,4.4,2000,Africa
+Morocco,34.3,29.8,32.1,4.5,1994,Africa
+Mozambique[a],21.7,17.5,19.6,4.2,2009,Africa
+Namibia[a],31.7,29.2,30.5,2.5,2006-2007,Africa
+Niger[a],23.1,15.7,19.4,7.4,2006,Africa
+Nigeria[a],26.9,19.3,23.1,7.6,2008,Africa
+Rwanda[a],24.8,20.6,22.7,4.2,2010,Africa
+São Tomé and Príncipe[a],23.8,18.8,21.3,5,2008-2009,Africa
+Senegal[a],28.9,19.9,24.4,9,2010-2011,Africa
+Sierra Leone[a],24.4,17.1,20.8,7.3,2008,Africa
+South Africa[b],32,29,30.5,3,2008,Africa
+Sudan,29.1,22.7,25.9,6.4,1993,Africa
+Uganda[a],22.4,18.2,20.3,4.2,2011,Africa
+Tanzania[a],23.8,18.9,21.4,4.9,2010,Africa
+Zambia[a],23.7,18.7,21.2,5,2007,Africa
+Zimbabwe[a],24.6,19.9,22.3,4.7,2010-2011,Africa
+Brazil,30,27,28.5,3,2013,America
+Canada,31,29.6,30.3,1.4,2008,America
+Chile,35.3,32.6,34,2.7,2013,America
+Mexico,29,26,27.5,3,2011,America
+United States,29.2,27.1,28.2,2.1,2015,America
+Armenia,29.4,26.3,27.9,3.1,2014,Asia
+Bangladesh[a],23.8,16,19.9,7.8,2011,Asia
+Cambodia[a],23.4,21,22.2,2.4,2010,Asia
+China,27.1,24.9,26,2.2,2017,Asia
+Hong Kong,31.2,28.9,30.1,2.3,2011,Asia
+India,26,22.2,24.1,3.8,2011,Asia
+Indonesia,25.7,22.3,24,3.4,2010,Asia
+Iran,27.4,23.8,25.6,3.6,2015,Asia
+Iraq,26.2,21.9,24.1,4.3,2016,Asia
+Israel,31.5,28.4,30,3.1,2010,Asia
+Japan,30.9,29.3,30.1,1.6,2013,Asia
+Jordan,28.7,23.8,26.3,4.9,2010,Asia
+Kazakhstan[a],26.9,24.3,25.6,2.6,2010,Asia
+Kyrgyzstan,26.9,23.5,25.2,3.4,2010,Asia
+Lebanon,32.8,28.8,30.8,4,2006,Asia
+Malaysia,28,25.7,26.9,2.3,2010,Asia
+Maldives[a],24.1,21.6,22.9,2.5,2009,Asia
+Mongolia[a],26.2,24.2,25.2,2,2010,Asia
+Myanmar[a],24,20.5,22.3,3.5,2007,Asia
+Nepal[a],22.1,17.9,20,4.2,2011,Asia
+Pakistan[a],21.8,20.3,21.1,1.5,2006-2007,Asia
+Palestine[c],25.4,20.1,22.8,5.3,2010,Asia
+Philippines,28,25.3,26.7,2.7,2011,Asia
+Singapore,30.1,27.9,29,2.2,2014,Asia
+South Korea,32.6,30,31.3,2.6,2015,Asia
+Taiwan,32,29.7,30.9,2.3,2014,Asia
+Tajikistan,26.3,22.5,24.4,3.8,2010,Asia
+Thailand[a],24.4,21,22.7,3.4,2010,Asia
+Timor-Leste[a],25,20.6,22.8,4.4,2009-2010,Asia
+Turkmenistan,24.6,23.3,24,1.3,2006,Asia
+Uzbekistan,25.2,22.4,23.8,2.8,2006,Asia
+Vietnam,26.2,22.8,24.5,3.4,2009,Asia
+Albania,29.5,24,26.8,5.5,2014,Europe
+Austria,32.6,30.3,31.5,2.3,2015,Europe
+Azerbaijan,27.6,23.7,25.7,3.9,2014,Europe
+Armenia,29.4,26.3,27.9,3.1,2014,Europe
+Belarus,27.4,25.3,26.4,2.1,2014,Europe
+Belgium,32.3,30,31.2,2.3,2015,Europe
+Bosnia and Herzegovina,29.6,26.4,28,3.2,2014,Europe
+Bulgaria,30.3,26.9,28.6,3.4,2014,Europe
+Croatia,30.6,28.1,29.4,2.5,2014,Europe
+Czech Republic,32.4,29.8,31.1,2.6,2015,Europe
+Cyprus,30.8,29,29.9,1.8,2014,Europe
+Denmark,34.5,32,33.3,2.5,2015,Europe
+Estonia,31.6,29,30.3,2.6,2014,Europe
+Finland,33.4,31.2,32.3,2.2,2015,Europe
+France,33,30.8,31.9,2.2,2011,Europe
+Georgia,29.9,26.6,28.3,3.3,2014,Europe
+Germany,33.4,30.9,32.2,2.5,2014,Europe
+Greece,33,29.9,31.5,3.1,2014,Europe
+Hungary,32.1,29.3,30.7,2.8,2014,Europe
+Iceland,34.6,32.7,33.7,1.9,2011,Europe
+Ireland,33.9,32.3,33.1,1.6,2015,Europe
+Italy,34.2,31.3,32.8,2.9,2014,Europe
+Latvia,30.6,28.2,29.4,2.4,2014,Europe
+Lithuania,29.7,27.3,28.5,2.4,2014,Europe
+Luxembourg,33.3,31.1,32.2,2.2,2015,Europe
+Macedonia,28.8,26,27.4,2.8,2014,Europe
+Malta,31.6,29.2,30.4,2.4,2011,Europe
+Moldova,27,24,25.5,3,2014,Europe
+Montenegro,32.7,28.6,30.7,4.1,2014,Europe
+Netherlands,33.5,30.9,32.2,2.6,2015,Europe
+Norway,33.8,31.9,32.9,1.9,2015,Europe
+Poland,29.1,26.7,27.9,2.4,2014,Europe
+Portugal,32.5,31,31.8,1.5,2015,Europe
+Romania,30.2,26.7,28.5,3.5,2014,Europe
+Russia,27.4,24.9,26.2,2.5,2011,Europe
+Serbia,31,28.1,29.6,2.9,2014,Europe
+Slovakia,30.8,28.1,29.5,2.7,2014,Europe
+Slovenia,32.2,29,30.6,3.2,2014,Europe
+Spain,34.5,32.3,33.4,2.2,2014,Europe
+Sweden,36,33.5,34.8,2.5,2015,Europe
+Switzerland,32.5,30.1,31.3,2.4,2014,Europe
+Ukraine,27,25,26,2,2013,Europe
+United Kingdom,32.5,30.6,31.6,1.9,2013,Europe
+Australia,31.8,29.8,30.8,2,2015,
+New Zealand,30.1,28.6,29.4,1.5,2013,
