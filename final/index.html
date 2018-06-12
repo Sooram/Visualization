@@ -55,6 +55,7 @@
         margin: 20px auto;
     }
     .index .name {
+        cursor: pointer;
         display: inline-block;
         /* height: 42px; */
         border: 1px solid;
@@ -64,7 +65,7 @@
         background-color: #fff;
         font-size: 16px;
     }
-    .index .show {
+    .index .zoom {
         cursor: pointer;
         font-size: 17px;
         width: 300px;
@@ -73,6 +74,16 @@
         padding: 12px 0;
         border: 1px solid #000;
         margin: 0 calc(50% - 75px);
+    }
+    .index .compare {
+        cursor: pointer;
+        font-size: 13px;
+        width: 200px;
+        text-align: center;
+        padding: 12px 0;
+        border: 1px solid #000;
+        margin: 20;
+        display: inline-block; 
     }
     .index .upper .index .bottom{
         width: 94%;
@@ -90,6 +101,16 @@
     .index .bottom {
         position: relative;
         height: 140px;
+    }
+    .subidx {
+        display: inline-block; 
+        margin:10px;
+        float: right;
+    }
+    .checkbox {
+        margin:10px;
+        font-size: 13px;
+        display: inline-block; 
     }
     </style>
 </head>
@@ -121,45 +142,58 @@
     </header>
     <section class=category>
         <article class=index>
-            <div class=name>Progress over time</div>
+            <div class=name id=progressName>Progress over time</div>
             <div class=upper>
                 <p>
                     다음은 우리나라의 연도별 성 격차 지수를 나타낸 그래프이다.
-                    대체적으로 양성 간의 평등한 정도가 조금씩 증가하고 있음을 알 수 있다.
+                    대체적으로 양성 간의 격차가 조금씩 개선되고 있음을 알 수 있다.
                 </p>
             </div>
             <div id='progress'></div>
             <div class=bottom>
-                <div class=show id=worldAvg>Compare with world average</div>
+                <!-- <div class=checkbox>
+                    <input type="checkbox" id=avg>World average<br>
+                </div>
+                <div class=checkbox>
+                    <input type="checkbox" id=hilow>Highest&Lowest<br>
+                </div>            -->
+                <div class=compare id=avg>Compare with world average</div>
+                <div class=compare id=hilow>Compare with highest&lowest</div>
                 <p>
-                    그렇다면 세계의 성 격차 지수는 어떠할까? 세계 성 격차 지수의 평균과 비교해보자.
+                    그렇다면 세계의 성 격차 지수는 어떠할까? 위의 버튼을 클릭하여 세계 성 격차 지수의 평균과 비교해보자.
+                </p>
+                <p>
+                    세계 성 격차 지수의 평균 역시 근 십여 년 간 개선되고 있다. 한국의 지수보다 좀 더 명확하게 보인다.
+                    여기서 주목할 점은 한국과 세계 평균 지수 사이의 차이이다. 
+                    한국은 계속해서 평균을 밑돌고 있으며, 그 차이 또한 좀처럼 좁혀지지 않고 있다.
+                </p>
+                <p>
+                    더욱 충격적인 것은 양성 간의 격차가 가장 적은 국가와의 차이이다. 
                 </p>
             </div>
         </article>       
-        <div id='progressAvg'></div>
         <div id='koreaIndex'></div>
         <article class=index>
-            <div class=name>GDP per capita</div>
+            <div>
+                <div class=name id=gdppcName>GDP per capita</div>
+                <div class=subidx id=total>합계</div>
+                <div class=subidx id=economy>경제</div>
+                <div class=subidx id=edu>교육</div>
+                <div class=subidx id=health>건강</div>
+                <div class=subidx id=politics>정치</div>
+            </div>
             <div class=upper>
                 <p>Which point do you think is representing Korea? Click and check each point.</p>
             </div>
             <div id='scatter1'></div>
             <div class=bottom>
-                <div class=show id=GDPPC>Zoom Korea&neighboring points</div>
+                <div class=zoom id=GDPPC>Zoom Korea&neighboring points</div>
                 <div class=desc>
                     <p>1인당 GDP와 성 격차 지수는 서유럽 국가들의 경우 어느 정도 상관 관계를 보이기는 하지만, 전체적으로는 명확한 상관 관계를 보이지 않는다. </p>
                     <p>우리나라와 1인당 GDP가 비슷한 나라들과 비교할 때, 우리나라는 낮은 편에 속한다. 실제로 여성 인권 후진국이라 불리는 중동 국가들을 제외하고 가장 낮은 지수를 보인다.</p>
                 </div>
             </div>
         </article>
-        <article class=index>
-                <div class=name>GDP</div>
-                <div class=upper>
-                    <p>Which point do you think is representing Korea? Click and check each point.</p>
-                </div>
-                <div id='scatter2'></div>
-                <div class=show id=GDP>Zoom Korea&neighboring points</div>
-            </article>
     </section>
     
     

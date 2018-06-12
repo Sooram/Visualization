@@ -27,12 +27,12 @@ function makeChart(args) {
 
     function row(d) { //row conversion function
         return { 
-        country: d.Country,
-        rankIdx: +d.IndexRank,
-        index: +d.GlobalIndex,
-        rankvalue: +d.ValueRank,
-        value: +d.Value,
-        region: d.Region
+            country: d.Country,
+            rankIdx: +d.IndexRank,
+            index: +d.GlobalIndex,
+            rankvalue: +d.ValueRank,
+            value: +d.Value,
+            region: d.Region,
         }  
     }
 
@@ -135,7 +135,7 @@ function makeChart(args) {
             .style('fill', 'white')
             .style('visibility', 'hidden');
 
-    point.append('text')
+        point.append('text')
             .style('visibility', 'hidden')
             .attr('class', 'details')
             .attr('x', function(d) {return x(d.value)})
@@ -188,6 +188,7 @@ function makeChart(args) {
                 }
             })
         })
+
         //////////////////////////////////////////////////////////////////////////////////////
         
         var max, min; 
@@ -300,7 +301,35 @@ function makeChart(args) {
                     }
                 })
             });
-        })
+
+            //Draw avg line
+            var avg = d3.mean(filtered, function(d) {return d.index});
+            svg.append("line")
+                .attr("x1", 0)
+                .attr("y1", y2(avg))
+                .attr("x2", innerW)
+                .attr("y2", y2(avg))
+                .attr("stroke-width", 2)
+                .attr("stroke", "black")
+                .style("stroke-dasharray", ("3, 3"))
+                .style('opacity', 0.6);
+            svg.append('text')
+                .attr('x', innerW+5)
+                .attr('y', y2(avg))
+                .attr('dy', ".35em")
+                .text('avg')
+                .attr('font-size', 10);
+        });//End of clicking zoom event
+
+        //Get back to the origianl chart when the name is clicked    
+        d3.select('#gdppcName').on('click', function(d) {
+            console.log('clicked');
+            d3.select(args.chartName).select('svg').remove();
+            d3.csv(args.fileName, row).then(callback);
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////
+
         function highlight(selection) {
             selection.select('circle').attr('r', 6).style('opacity', 1);
             return selection;
