@@ -15,8 +15,8 @@ function callback(data) {
     console.log(data);
 
     //Basic setting
-    var w = 400, h = 300;
-    var margin = {top:20, right:30, bottom: 20, left: 30};
+    var w = 450, h = 300;
+    var margin = {top:20, right:100, bottom: 20, left: 30};
     var innerW = w - margin.right - margin.left,
         innerH = h - margin.top - margin.bottom;
 
@@ -176,6 +176,38 @@ function callback(data) {
         svg.select('.line').remove();
         svg.selectAll('.barHi').remove();
         svg.selectAll('.barLow').remove();
+
+        //Legend
+        var legendVals = ['Avg', 'Kor'];
+        var legendOpc = [0.3, 0.5]
+        var chipHeight = 12; 
+        var chipPadding = 2; 
+        var legendHeight = 16;
+        var legendPadding = 4;
+        var legend = svg.append('g')
+            .attr('class', 'legend-g')
+            .attr('transform', 'translate(' + [innerW + 50, legendHeight]  +  ')')
+            .selectAll('.legend')
+            .data(legendVals) 
+            .enter().append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d,i){
+                return 'translate(' + [0, i *(legendHeight + legendPadding)]+ ')'
+            });
+
+        legend.append('rect')
+            .attr('y', chipPadding)
+            .attr('width', chipHeight).attr('height', chipHeight)
+            .style('fill', 'steelblue')
+            .style('opacity', function(d, i){return legendOpc[i]})
+            // .style('opacity', 0.5);
+
+        legend.append('text')
+            .attr('x', chipPadding + chipHeight)
+            .attr('y', chipPadding)
+            .attr('dy', '.71em')
+            .style('font-size', 10+ 'px')
+            .text(function(d){return d});
     });//End of avg clicked
 
     d3.select("#hilow").on("click", function(d) {
@@ -281,6 +313,7 @@ function callback(data) {
         svg.selectAll('.barHi').remove();
         svg.selectAll('.barLow').remove();
         svg.selectAll('.line').remove();
+        svg.selectAll('.legend-g').remove();
         y.domain([0.6, d3.max(data, function(d){return d.value})]);
         //Draw y axis again
         yAxis2 = d3.axisLeft(y)  

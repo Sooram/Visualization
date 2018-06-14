@@ -22,6 +22,9 @@
     }
     #title-section {
         text-align: center;
+    }
+    #title-section, #introduction {
+        /* text-align: center; */
         border-bottom: 1px dashed;
     }
     #title {
@@ -52,7 +55,7 @@
         margin-bottom: 64px;
     }
     .index {
-        margin: 20px auto;
+        margin: 50px auto;
     }
     .index .name {
         cursor: pointer;
@@ -78,7 +81,7 @@
     .index .compare {
         cursor: pointer;
         font-size: 13px;
-        width: 200px;
+        width: 150px;
         text-align: center;
         padding: 12px 0;
         border: 1px solid #000;
@@ -100,17 +103,23 @@
     }
     .index .bottom {
         position: relative;
-        height: 140px;
     }
-    .subidx {
-        display: inline-block; 
+    .index .subidx {
+        /* display: inline-block;  */
         margin:10px;
         float: right;
+        cursor: pointer;
     }
-    .checkbox {
-        margin:10px;
+    .index .subidx:active, .subidx:hover {
+        font-weight: bold;
+    }
+    .total, .economy, .health, .edu, .politics {
+        display: inline-block;
+        width: 50px;
+        padding: 10px;
+    }
+    .source {
         font-size: 13px;
-        display: inline-block; 
     }
     </style>
 </head>
@@ -133,54 +142,53 @@
                 </p>
                 <p>
                     하지만 과연 한국 사회에서 양성 간의 격차는 충분히 줄어들었는가? 
-                    다른 나라들과 비교할 때 한국의 성 격차 지수는 어떠한가?
-                    세계 경제 포럼에서 발표한 세계 성 격차 지수 보고서의 내용을 바탕으로 한국의 성 격차 지수가 최근 십여 년 동안 어떻게 변화했는지,
-                    그리고 이는 한국과 경제, 사회, 문화적으로 닮은 나라들과 비교했을 때 어떠한지 알아보자.
+                    다른 나라들과 비교할 때 한국의 성 평등 지수는 어떠한가?
+                    세계 경제 포럼에서 발표한 세계 성 평등 지수 보고서의 내용을 바탕으로 한국의 성 평등 지수가 최근 십여 년 동안 어떻게 변화했는지,
+                    그리고 이는 한국과 사회⋅경제적으로 닮은 나라들과 비교했을 때 어떠한지 알아보자.
                 </p>
             </div>
         </section>
     </header>
-    <section class=category>
+    <section class=category id=introduction>
         <article class=index>
             <div class=name id=progressName>Progress over time</div>
             <div class=upper>
                 <p>
-                    다음은 우리나라의 연도별 성 격차 지수를 나타낸 그래프이다.
-                    대체적으로 양성 간의 격차가 조금씩 개선되고 있음을 알 수 있다.
+                    다음은 우리나라의 연도별 성 평등 지수를 나타낸 그래프이다.
+                    대체적으로 조금씩 증가하고 있다.
                 </p>
             </div>
             <div id='progress'></div>
             <div class=bottom>
-                <!-- <div class=checkbox>
-                    <input type="checkbox" id=avg>World average<br>
-                </div>
-                <div class=checkbox>
-                    <input type="checkbox" id=hilow>Highest&Lowest<br>
-                </div>            -->
-                <div class=compare id=avg>Compare with world average</div>
-                <div class=compare id=hilow>Compare with highest&lowest</div>
+                <div class=compare id=avg>+ World Average</div>
+                <div class=compare id=hilow>+ Highest&Lowest</div>
                 <p>
-                    그렇다면 세계의 성 격차 지수는 어떠할까? 위의 버튼을 클릭하여 세계 성 격차 지수의 평균과 비교해보자.
+                    그렇다면 세계의 성 평등 지수는 어떠할까? 위의 버튼을 클릭하여 세계 성 평등 지수의 평균과 비교해보자.
                 </p>
                 <p>
-                    세계 성 격차 지수의 평균 역시 근 십여 년 간 개선되고 있다. 한국의 지수보다 좀 더 명확하게 보인다.
+                    세계 성 평등 지수의 평균 역시 근 십여 년 간 개선되고 있다. 이는 한국의 지수보다 좀 더 명확하게 보인다.
                     여기서 주목할 점은 한국과 세계 평균 지수 사이의 차이이다. 
                     한국은 계속해서 평균을 밑돌고 있으며, 그 차이 또한 좀처럼 좁혀지지 않고 있다.
                 </p>
                 <p>
-                    더욱 충격적인 것은 양성 간의 격차가 가장 적은 국가와의 차이이다. 
+                    실제로 2017년 세계 성 평등 지수 보고서에서 한국은 144개국 중 118위를 차지했다. 최하위권인 셈이다.
+                    1위를 차지한 아이슬란드와 144위를 차지한 예멘과 비교하면 한국의 위치를 좀 더 명확히 알 수 있다.
+                </p>
+                <p>
+                    한국은 과연 
                 </p>
             </div>
-        </article>       
-        <div id='koreaIndex'></div>
+        </article>  
+    </section>     
+    <section class=category>
         <article class=index>
-            <div>
-                <div class=name id=gdppcName>GDP per capita</div>
-                <div class=subidx id=total>합계</div>
-                <div class=subidx id=economy>경제</div>
-                <div class=subidx id=edu>교육</div>
-                <div class=subidx id=health>건강</div>
-                <div class=subidx id=politics>정치</div>
+            <div class=GDPPC>
+                <div class=name id=GDPPCname>GDP per capita(GDPPC)</div>
+                <div class=subidx id=GDPPCtotal>합계</div>
+                <div class=subidx id=GDPPCeconomy>경제</div>
+                <div class=subidx id=GDPPCedu>교육</div>
+                <div class=subidx id=GDPPChealth>건강</div>
+                <div class=subidx id=GDPPCpolitics>정치</div>
             </div>
             <div class=upper>
                 <p>Which point do you think is representing Korea? Click and check each point.</p>
@@ -189,13 +197,89 @@
             <div class=bottom>
                 <div class=zoom id=GDPPC>Zoom Korea&neighboring points</div>
                 <div class=desc>
-                    <p>1인당 GDP와 성 격차 지수는 서유럽 국가들의 경우 어느 정도 상관 관계를 보이기는 하지만, 전체적으로는 명확한 상관 관계를 보이지 않는다. </p>
-                    <p>우리나라와 1인당 GDP가 비슷한 나라들과 비교할 때, 우리나라는 낮은 편에 속한다. 실제로 여성 인권 후진국이라 불리는 중동 국가들을 제외하고 가장 낮은 지수를 보인다.</p>
+                    <p>1인당 GDP와 성 평등 지수는 서유럽 국가들의 경우 어느 정도 상관 관계를 보이기는 하지만, 전체적으로는 명확한 상관 관계를 보이지 않는다. </p>
+                    <p>
+                        우리나라와 경제적으로 비슷한 수준의 나라들과 비교할 때, 우리나라의 성 평등 지수는 낮은 편에 속한다. 
+                        실제로는 여성 인권 후진국이라 불리는 중동 국가들을 제외하고 가장 낮은 지수를 보인다.
+                        특히, 교육 부문에 있어서는 기타 국가들에 비해 현저하게 낮다.
+                    </p>
+                </div>
+                <div class=source>
+                    (출처: World Economic Outlook Database, April 2018, International Monetary Fund. Accessed on 17 April 2018.)
                 </div>
             </div>
         </article>
+        <article class=index>
+            <div class=TFR>
+                <div class=name id=TFRname>Total fertility rate(TFR)</div>
+                <div class=subidx id=TFRtotal>합계</div>
+                <div class=subidx id=TFReconomy>경제</div>
+                <div class=subidx id=TFRedu>교육</div>
+                <div class=subidx id=TFRhealth>건강</div>
+                <div class=subidx id=TFRpolitics>정치</div>
+            </div>
+            <div class=upper>
+                <p>Which point do you think is representing Korea? Click and check each point.</p>
+            </div>
+            <div id='scatter2'></div>
+            <div class=bottom>
+                <div class=zoom id=TFR>Zoom Korea&neighboring points</div>
+                <div class=desc>
+                    <p>
+                        출생률과 성 평등 지수는 1인당 GDP와 마찬가지로 서유럽 국가들을 제외하고 뚜렷한 상관관계를 보이지 않는다.
+                        다만, 교육 부문에서는 출생률이 높을수록 성 평등 지수가 떨어지는 양상을 보인다.
+                    </p>
+                    <p>
+                        우리나라와 출생률이 비슷한 나라들은 대부분 동유럽 국가들이다. 이들과 비교할 때 우리나라는 성 평등 지수가 가장 낮다.
+                        정치 부문과 건강 부문에서는 꼴찌를 면했지만, 이들 부문에서도 평균보다 낮은 수치를 보인다.
+                    </p>
+                </div>
+                <div class=source>
+                    (출처: "The World Factbook — Central Intelligence Agency". Cia.gov. Retrieved 2018-01-04.)
+                </div>
+            </div>
+            </div>
+        </article>
+        <article class=index>
+            <div class=DI>
+                <div class=name id=DIname>Democracy Index(DI)</div>
+                <div class=subidx id=DItotal>합계</div>
+                <div class=subidx id=DIeconomy>경제</div>
+                <div class=subidx id=DIedu>교육</div>
+                <div class=subidx id=DIhealth>건강</div>
+                <div class=subidx id=DIpolitics>정치</div>
+            </div>
+            <div class=upper>
+                <p>Which point do you think is representing Korea? Click and check each point.</p>
+            </div>
+            <div id='scatter3'></div>
+            <div class=bottom>
+                <div class=zoom id=DI>Zoom Korea&neighboring points</div>
+                <div class=desc>
+                    <p>
+                        민주주의 지수와 성 평등 지수는 다른 지표에 비해 상대적으로 관계가 있다고 할 수 있다.
+                        특히, 서유럽과 중동 나라들은 비교적 명확히 상관관계를 보인다.
+                    </p>
+                    <p>
+                        우리나라와 민주주의 지수가 비슷한 나라들과 비교할 때, 우리나라는 이웃나라 일본과 함께 가장 낮은 수치를 보인다.
+                        출생률에서와 마찬가지로 교육과 경제 부문에서 최하위일 뿐만 아니라 모든 부문에서 평균보다 낮다.
+                    </p>
+                </div>
+                <div class=source>
+                    (출처:  "Democracy Index 2017 - Economist Intelligence Unit" (PDF). EIU.com. Retrieved 17 February 2018.)
+                </div>
+            </div>
+            </div>
+        </article>
     </section>
-    
+    <section class=category id=conclusion>
+        <div class=desc>
+            <p></p>
+        </div>
+        <div class=source>
+            (reference: http://project.newsjel.ly/governments/)
+        </div>
+    </section>
     
     <script src="index.js"></script>
     <script src='circle.js'></script>

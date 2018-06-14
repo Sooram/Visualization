@@ -6,21 +6,32 @@ var gdppc = {
     filterRange: [23000, 38000],
     x2DomainOffset: [1000, 2000],
     y2DomainOffset:[0.01, 0.005],
-    fileName: './data/GDPPC.csv'
+    fileName: './data/GDPPC-2.csv'
 }
 
-var gdp = {
+var tfr = {
     chartName: '#scatter2',
-    xDomain: [0, 5000000],
-    valName: 'GDP',
-    filterRange: [1000000, 2200000],
-    x2DomainOffset: [100000, 100000],
-    y2DomainOffset:[0.01, 0.005],
-    fileName: './data/GDP.csv'
+    xDomain: [0.7, 6.3],
+    valName: 'TFR',
+    filterRange: [1.2, 1.45],
+    x2DomainOffset: [0.01, 0.05],
+    y2DomainOffset: [0.01, 0.01],
+    fileName: './data/TFR-2.csv'
+}
+
+var di = {
+    chartName: '#scatter3',
+    xDomain: [1, 10],
+    valName: 'DI',
+    filterRange: [7.5, 8],
+    x2DomainOffset: [0.01, 0.05],
+    y2DomainOffset: [0.01, 0.01],
+    fileName: './data/DI.csv' 
 }
 
 makeChart(gdppc);
-// makeChart(gdp);
+makeChart(tfr);
+makeChart(di);
 
 function makeChart(args) {
     d3.csv(args.fileName, row).then(callback); /****/
@@ -33,6 +44,10 @@ function makeChart(args) {
             rankvalue: +d.ValueRank,
             value: +d.Value,
             region: d.Region,
+            economy: +d.ECONOMIC,
+            edu: +d.EDUCATIONAL,
+            health: +d.HEALTH,
+            politics: +d.POLITICAL
         }  
     }
 
@@ -40,13 +55,15 @@ function makeChart(args) {
         console.log(data);
         //Basic setting
         var w = 800, h = 300;
-        var margin = {top:20, right:300, bottom: 30, left: 30};
+        var margin = {top:20, right:300, bottom: 30, left: 40};
         var innerW = w - margin.right - margin.left,
             innerH = h - margin.top - margin.bottom;
 
         var t = d3.transition()
             .duration(800)
             .ease(d3.easeElastic);
+
+        var xy = d3.local();
 
         var svg = d3.select(args.chartName).append('svg')/****/
             .attr('width', w)
@@ -120,16 +137,13 @@ function makeChart(args) {
             .append('g').attr('class', 'point')
             
         point.append('circle')
-            .attr('cx', function(d) {return x(d.value)})
-            .attr('cy', function(d) {return y(d.index)})
             .attr('r', 4)
             .attr('fill', function(d) {return c(d.region)})
             .attr('opacity', 0.5)
 
         point.append('rect')
             .attr('class', 'box')
-            .attr('x', function(d) {return x(d.value)})
-            .attr('y', function(d) {return y(d.index)+10})
+            .attr('y', 5)
             .attr('width', 65)
             .attr('height', 25)
             .style('fill', 'white')
@@ -138,24 +152,32 @@ function makeChart(args) {
         point.append('text')
             .style('visibility', 'hidden')
             .attr('class', 'details')
-            .attr('x', function(d) {return x(d.value)})
-            .attr('y', function(d) {return y(d.index)})
             .text(function(d) {return d.country})
             .attr('font-size', 15)
         .append('tspan')
             .style('visibility', 'hidden')
             .attr('class', 'details')
-            .attr('x', function(d) {return x(d.value)})
+            .attr('x', 0)
             .attr('dy', 20)
             .text(function(d) { return args.valName +': ' + d.value; })/****/
             .attr('font-size', 10)
         .append('tspan')
             .style('visibility', 'hidden')
             .attr('class', 'details')
-            .attr('x', function(d) {return x(d.value)})
+            .attr('x', 0)
             .attr('dy', 10)
             .text(function(d) { return 'index: ' + d.index; })
             .attr('font-size', 10);
+
+        //Store current position
+        point.each(function (d) {
+                xy.set(this, [x(d.value), y(d.index)]);
+              })
+              .attr('transform', function (d) {
+                var pos = xy.get(this);
+                return 'translate(' + pos + ')'
+              })
+       
         
         //Hide details when the white space is clicked
         svg.on('click', function(d) {
@@ -193,7 +215,7 @@ function makeChart(args) {
         
         var max, min; 
 
-        d3.select('#'+args.valName).on('click', function(d) {
+        d3.select('#'+args.valName).on('click', function() {
             min =  args.filterRange[0];/****/
             max = args.filterRange[1];/****/
 
@@ -209,7 +231,7 @@ function makeChart(args) {
                 .domain([d3.min(filtered, function(d) {return d.index-args.y2DomainOffset[0]}), 
                     d3.max(filtered, function(d) {return d.index+args.y2DomainOffset[1]})]) /****/
                 .range([innerH, 0]);
-            
+
             //Draw axis again
             var xAxis2 = d3.axisBottom(x2) 
                 .tickSize(0) 
@@ -229,8 +251,8 @@ function makeChart(args) {
                 if(d.value < min || d.value > max) {
                     d3.select(this)
                         .transition(t)
-                        .attr('transform', function(d){
-                            return 'translate('+ [x2(d.value)-x(d.value), y2(d.index)-y(d.index)] + ')'
+                        .attr('transform', function(d) {
+                            return 'translate(' + [x2(d.value), y2(d.index)] + ')'
                         })
                         .remove();
                 }
@@ -238,7 +260,7 @@ function makeChart(args) {
                     var cur = d3.select(this)
                     cur.transition(t)
                         .attr('transform', function(d){
-                            return 'translate('+ [x2(d.value)-x(d.value), y2(d.index)-y(d.index)] + ')'
+                            return 'translate('+ [x2(d.value), y2(d.index)] + ')'
                         })
                         .select('text')
                             .transition(t)
@@ -275,10 +297,12 @@ function makeChart(args) {
             point.on('mouseenter', function(d) {
                 point.filter(function(p) {return d.country === p.country})
                     .classed('hover', true);
-                d3.select(this).selectAll('.details')
+                d3.selectAll('.details').style('opacity', 0.4);
+                var cur = d3.select(this);
+                cur.selectAll('.details')
                     .style('visibility', 'visible');
-                d3.select(this).call(highlight);
-                d3.select(this).select('.box').style('visibility', 'visible');
+                cur.call(highlight);
+                cur.select('.box').style('visibility', 'visible');      
             }).on('mouseleave', function(d) {
                 var hover = point.filter(function() {
                     return d3.select(this).classed('hover')
@@ -286,6 +310,7 @@ function makeChart(args) {
                 if(d.country != 'Korea, Rep.') {
                     hover.call(original);
                 }
+                d3.selectAll('.details').style('opacity', 1);
                 hover.selectAll('tspan')
                     .style('visibility', 'hidden');
                 point.selectAll('.box').style('visibility', 'hidden');
@@ -303,8 +328,10 @@ function makeChart(args) {
             });
 
             //Draw avg line
+            d3.selectAll('.standard').remove();
             var avg = d3.mean(filtered, function(d) {return d.index});
             svg.append("line")
+                .attr('class', 'standard')
                 .attr("x1", 0)
                 .attr("y1", y2(avg))
                 .attr("x2", innerW)
@@ -314,29 +341,321 @@ function makeChart(args) {
                 .style("stroke-dasharray", ("3, 3"))
                 .style('opacity', 0.6);
             svg.append('text')
+                .attr('class', 'standard')
                 .attr('x', innerW+5)
                 .attr('y', y2(avg))
                 .attr('dy', ".35em")
                 .text('avg')
                 .attr('font-size', 10);
+                        
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            
+            d3.select('#'+args.valName+'total').on('click', function() {
+                d3.select('.' + args.valName)
+                    .selectAll('.subidx').style('font-weight', 'normal');
+                d3.select(this).style('font-weight', 'bold');
+                console.log('total clicked');
+                y2.domain([d3.min(filtered, function(d) {return d.index-args.y2DomainOffset[0]}), 
+                        d3.max(filtered, function(d) {return d.index+args.y2DomainOffset[1]})]);
+                
+                yAxis2 = d3.axisLeft(y2)  
+                    .ticks(5)
+                    .tickSizeOuter(0);
+                svg.select('.y.axis')
+                    .transition(t) 
+                    .call(yAxis2);
+
+                point.each(function(d) {
+                        xy.set(this, [x2(d.value), y2(d.index)]);
+                        d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.index});
+                    })       
+                    .transition(t)
+                    .attr('transform', function (d) {
+                        var pos = xy.get(this);
+                        return 'translate(' + pos + ')'
+                    });
+
+                //Move avg line
+                svg.selectAll('.standard')
+                    .attr('y1', y2(avg))
+                    .attr('y2', y2(avg))
+                    .attr('y', y2(avg));
+
+            })//End of total clicked
+    
+            d3.select('#'+args.valName+'economy').on('click', function() {
+                d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+                d3.select(this).style('font-weight', 'bold');
+                console.log('economy clicked');
+                y2.domain(d3.extent(filtered, function(d) {return d.economy}));
+                    yAxis2 = d3.axisLeft(y2)  
+                        .ticks(5)
+                        .tickSizeOuter(0);
+                    svg.select('.y.axis')
+                        .transition(t) 
+                        .call(yAxis2);
+                point.each(function(d) {
+                        xy.set(this, [x2(d.value), y2(d.economy)]);
+                        d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.economy}); 
+                    })
+                    .transition(t)
+                    .attr('transform', function (d) {
+                        var pos = xy.get(this);
+                        return 'translate(' + pos + ')'
+                    });
+                //Move avg line
+                var avg = d3.mean(filtered, function(d) {return d.economy});
+                svg.selectAll('.standard')
+                    .attr('y1', y2(avg))
+                    .attr('y2', y2(avg))
+                    .attr('y', y2(avg));
+
+            })//End of economy clicked
+    
+            d3.select('#'+args.valName+'edu').on('click', function() {
+                d3.select('.' + args.valName)
+                    .selectAll('.subidx').style('font-weight', 'normal');
+                d3.select(this).style('font-weight', 'bold');
+                console.log('edu clicked');
+                y2.domain(d3.extent(filtered, function(d) {return d.edu}));
+                yAxis2 = d3.axisLeft(y2)  
+                    .ticks(5)
+                    .tickSizeOuter(0);
+                svg.select('.y.axis')
+                    .transition(t) 
+                    .call(yAxis2);
+                point.each(function(d) {
+                        xy.set(this, [x2(d.value), y2(d.edu)]);
+                        d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.edu});    
+                    })
+                    .transition(t)
+                    .attr('transform', function (d) {
+                        var pos = xy.get(this);
+                        return 'translate(' + pos + ')'
+                    });
+                
+                //Move avg line
+                var avg = d3.mean(filtered, function(d) {return d.edu});
+                svg.selectAll('.standard')
+                    .attr('y1', y2(avg))
+                    .attr('y2', y2(avg))
+                    .attr('y', y2(avg));
+            })//End of edu clicked
+    
+            d3.select('#'+args.valName+'health').on('click', function() {
+                d3.select('.' + args.valName)
+                    .selectAll('.subidx').style('font-weight', 'normal');
+                d3.select(this).style('font-weight', 'bold');
+                console.log('health clicked');
+                y2.domain(d3.extent(filtered, function(d) {return d.health}));
+                yAxis2 = d3.axisLeft(y2)  
+                    .ticks(5)
+                    .tickSizeOuter(0);
+                svg.select('.y.axis')
+                    .transition(t) 
+                    .call(yAxis2);
+                point.each(function(d) {
+                        xy.set(this, [x2(d.value), y2(d.health)]); 
+                        d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.health});
+                    })
+                    .transition(t)
+                    .attr('transform', function (d) {
+                        var pos = xy.get(this);
+                        return 'translate(' + pos + ')'
+                    });
+                //Move avg line
+                var avg = d3.mean(filtered, function(d) {return d.health});
+                svg.selectAll('.standard')
+                    .attr('y1', y2(avg))
+                    .attr('y2', y2(avg))
+                    .attr('y', y2(avg));
+            })//End of health clicked
+    
+        
+            d3.select('#'+args.valName+'politics').on('click', function() {
+                d3.select('.' + args.valName)
+                    .selectAll('.subidx').style('font-weight', 'normal');
+                d3.select(this).style('font-weight', 'bold');
+                console.log('pol clicked');
+                y2.domain(d3.extent(filtered, function(d) {return d.politics}));
+                yAxis2 = d3.axisLeft(y2)  
+                    .ticks(5)
+                    .tickSizeOuter(0);
+                svg.select('.y.axis')
+                    .transition(t) 
+                    .call(yAxis2);
+                point.each(function(d) {
+                        xy.set(this, [x2(d.value), y2(d.politics)]); 
+                        d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.politics});
+                    })
+                    .transition(t)
+                    .attr('transform', function (d) {
+                        var pos = xy.get(this);
+                        return 'translate(' + pos + ')'
+                    });
+                //Move avg line
+                var avg = d3.mean(filtered, function(d) {return d.politics});
+                svg.selectAll('.standard')
+                    .attr('y1', y2(avg))
+                    .attr('y2', y2(avg))
+                    .attr('y', y2(avg));
+            })//End of pol clicked
+            
         });//End of clicking zoom event
-
-        //Get back to the origianl chart when the name is clicked    
-        d3.select('#gdppcName').on('click', function(d) {
-            console.log('clicked');
-            d3.select(args.chartName).select('svg').remove();
-            d3.csv(args.fileName, row).then(callback);
-        });
-
         //////////////////////////////////////////////////////////////////////////////////////
-
         function highlight(selection) {
             selection.select('circle').attr('r', 6).style('opacity', 1);
+            selection.selectAll('.details')
+                    .style('opacity', 1)
+                    .style('font-weight', 'bold');
             return selection;
         }
         function original(selection) {
             selection.select('circle').attr('r', 4).style('opacity', 0.5);
+            selection.selectAll('.details')
+                    .style('font-weight', 'normal');
             return selection;
         }
+        //////////////////////////////////////////////////////////////////////////////////////        
+        d3.select('#'+args.valName+'total').on('click', function() {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            d3.select(this).style('font-weight', 'bold');
+            console.log('total clicked');
+            y.domain([0.5, 0.9]);
+            yAxis2 = d3.axisLeft(y)  
+                .ticks(5)
+                .tickSizeOuter(0);
+            svg.select('.y.axis')
+                .transition(t) 
+                .call(yAxis2);
+            point.each(function(d) {
+                    xy.set(this, [x(d.value), y(d.index)]); 
+                    d3.select(this).select('tspan').select('tspan')
+                        .text(function(d) {return 'index: ' + d.index});
+                })       
+                .transition(t)
+                .attr('transform', function (d) {
+                    var pos = xy.get(this);
+                    return 'translate(' + pos + ')'
+                });
+        })//End of total clicked
+
+        d3.select('#'+args.valName+'economy').on('click', function() {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            d3.select(this).style('font-weight', 'bold');
+            console.log('economy clicked');
+            y.domain([0.26, 0.92]);
+            yAxis2 = d3.axisLeft(y)  
+                .ticks(5)
+                .tickSizeOuter(0);
+            svg.select('.y.axis')
+                .transition(t) 
+                .call(yAxis2);
+            point.each(function(d) {
+                    xy.set(this, [x(d.value), y(d.economy)]); 
+                    d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.health});
+                })
+                .transition(t)
+                .attr('transform', function (d) {
+                    var pos = xy.get(this);
+                    return 'translate(' + pos + ')'
+                });
+        })//End of economy clicked
+
+        d3.select('#'+args.valName+'edu').on('click', function() {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            d3.select(this).style('font-weight', 'bold');
+            console.log('edu clicked');
+            y.domain([0.56, 1]);
+            yAxis2 = d3.axisLeft(y)  
+                .ticks(5)
+                .tickSizeOuter(0);
+            svg.select('.y.axis')
+                .transition(t) 
+                .call(yAxis2);
+            point.each(function(d) {
+                    xy.set(this, [x(d.value), y(d.edu)]); 
+                    d3.select(this).select('tspan').select('tspan')
+                        .text(function(d) {return 'index: ' + d.edu});
+                })
+                .transition(t)
+                .attr('transform', function (d) {
+                    var pos = xy.get(this);
+                    return 'translate(' + pos + ')'
+                });
+        })//End of edu clicked
+
+        d3.select('#'+args.valName+'health').on('click', function() {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            d3.select(this).style('font-weight', 'bold');
+            console.log('health clicked');
+            y.domain([0.91, 0.98]);
+            yAxis2 = d3.axisLeft(y)  
+                .ticks(5)
+                .tickSizeOuter(0);
+            svg.select('.y.axis')
+                .transition(t) 
+                .call(yAxis2);
+            point.each(function(d) {
+                    xy.set(this, [x(d.value), y(d.health)]); 
+                    d3.select(this).select('tspan').select('tspan')
+                        .text(function(d) {return 'index: ' + d.health});
+                })
+                .transition(t)
+                .attr('transform', function (d) {
+                    var pos = xy.get(this);
+                    return 'translate(' + pos + ')'
+                });
+        })//End of health clicked
+
+    
+        d3.select('#'+args.valName+'politics').on('click', function() {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            d3.select(this).style('font-weight', 'bold');
+            console.log('pol clicked');
+            y.domain([0.0, 0.76]);
+            yAxis2 = d3.axisLeft(y)  
+                .ticks(5)
+                .tickSizeOuter(0);
+            svg.select('.y.axis')
+                .transition(t) 
+                .call(yAxis2);
+            point.each(function(d) {
+                    xy.set(this, [x(d.value), y(d.politics)]); 
+                    d3.select(this).select('tspan').select('tspan')
+                            .text(function(d) {return 'index: ' + d.politics});
+                })
+                .transition(t)
+                .attr('transform', function (d) {
+                    var pos = xy.get(this);
+                    return 'translate(' + pos + ')'
+                });
+        })//End of pol clicked
+
+        //Get back to the origianl chart when the name is clicked    
+        d3.select('#'+ args.valName +'name').on('click', function(d) {
+            d3.select('.' + args.valName)
+                .selectAll('.subidx').style('font-weight', 'normal');
+            console.log('name clicked');
+            zoomed = false;
+            d3.select(args.chartName).select('svg').remove();
+            d3.csv(args.fileName, row).then(callback);
+        });
     }//End of callback
 }//End of makeChart
+  
+// }
+
