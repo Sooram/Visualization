@@ -114,4 +114,4 @@ function callbackKorea(data) {
     });
 }
 
-d3.csv("/data/progress-over-time.csv").then(callbackKorea);
+d3.csv("/data/Category.csv").then(callbackKorea);

@@ -4,9 +4,23 @@
     <meta charset="utf-8">
     <title>Gender gap in Korea</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="d3-textwrap.min.js" type="text/javascript"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js'></script>
     <style>
+    .toolTip {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: absolute;
+        display: none;
+        width: auto;
+        height: auto;
+        background: none repeat scroll 0 0 white;
+        border: 0 none;
+        border-radius: 8px 8px 8px 8px;
+        box-shadow: -3px 3px 15px #888888;
+        color: black;
+        font: 12px sans-serif;
+        padding: 5px;
+        text-align: center;
+    }
     svg {
       cursor: pointer;
       /* pointer-events: bounding-box;
@@ -17,13 +31,13 @@
     }
     #visualization-project {
         margin-bottom: 64px;
-        height: 25px;
+        height: 30px;
         box-shadow: 0 3px 10px 0 rgba(93,93,93,.1);
     }
     #title-section {
         text-align: center;
     }
-    #title-section, #introduction {
+    #title-section {
         /* text-align: center; */
         border-bottom: 1px dashed;
     }
@@ -80,12 +94,12 @@
     }
     .index .compare {
         cursor: pointer;
-        font-size: 13px;
-        width: 150px;
+        font-size: 17px;
+        width: 300px;
         text-align: center;
         padding: 12px 0;
         border: 1px solid #000;
-        margin: 20;
+        margin: 0 calc(40% - 75px);
         display: inline-block; 
     }
     .index .upper .index .bottom{
@@ -104,6 +118,13 @@
     .index .bottom {
         position: relative;
     }
+    .index .desc {
+        font-size: 15px;
+        /* color: #7a7a7a; */
+        line-height: 1.7;
+        text-align: left;
+        margin: 0 auto;
+    }
     .index .subidx {
         /* display: inline-block;  */
         margin:10px;
@@ -120,6 +141,12 @@
     }
     .source {
         font-size: 13px;
+        margin-bottom: 64px;
+    }
+    .outer {
+        font-size: 15px;
+        color: #7a7a7a;
+        line-height: 1.7;
     }
     </style>
 </head>
@@ -143,7 +170,7 @@
                 <p>
                     하지만 과연 한국 사회에서 양성 간의 격차는 충분히 줄어들었는가? 
                     다른 나라들과 비교할 때 한국의 성 평등 지수는 어떠한가?
-                    세계 경제 포럼에서 발표한 세계 성 평등 지수 보고서의 내용을 바탕으로 한국의 성 평등 지수가 최근 십여 년 동안 어떻게 변화했는지,
+                    세계 경제 포럼에서 발표한 세계 성 평등 지수 보고서의 내용을 바탕으로 한국의 성 평등 지수는 어느 수준인지,
                     그리고 이는 한국과 사회⋅경제적으로 닮은 나라들과 비교했을 때 어떠한지 알아보자.
                 </p>
             </div>
@@ -151,36 +178,40 @@
     </header>
     <section class=category id=introduction>
         <article class=index>
-            <div class=name id=progressName>Progress over time</div>
-            <div class=upper>
+            <div class=outer>
                 <p>
-                    다음은 우리나라의 연도별 성 평등 지수를 나타낸 그래프이다.
-                    대체적으로 조금씩 증가하고 있다.
+                    먼저, 성 평등 지수 보고서에서 우리나라는 어떤 성적을 받았는지 살펴보자. 
                 </p>
             </div>
-            <div id='progress'></div>
-            <div class=bottom>
-                <div class=compare id=avg>+ World Average</div>
-                <div class=compare id=hilow>+ Highest&Lowest</div>
+            <div class=name id=koreaName>Indices of Korea</div>
+            <div id=koreaIndex></div>
+            <div class=compare id=avg>Compare with other countries</div>
+            <div class=desc>
                 <p>
-                    그렇다면 세계의 성 평등 지수는 어떠할까? 위의 버튼을 클릭하여 세계 성 평등 지수의 평균과 비교해보자.
+                    각 부문별로 양성 간의 격차가 어느 정도인지 막대의 길이로 짐작할 수 있다.
+                    경제, 교육, 건강, 정치의 네 가지 방면에서 종합적으로 평가한 우리나라의 성 평등 지수는 0.65이다. 
+                    특히, 경제와 정치 부문에서 막대가 굉장히 짧다는 것을 확인할 수 있다. 
+                    여성이 남성에 비해 절반을 조금 넘는 경제 참여 기회를 얻고 있으며, 정치 참여 또한 극히 제한적이다. 
                 </p>
                 <p>
-                    세계 성 평등 지수의 평균 역시 근 십여 년 간 개선되고 있다. 이는 한국의 지수보다 좀 더 명확하게 보인다.
-                    여기서 주목할 점은 한국과 세계 평균 지수 사이의 차이이다. 
-                    한국은 계속해서 평균을 밑돌고 있으며, 그 차이 또한 좀처럼 좁혀지지 않고 있다.
+                    그렇다면 다른 나라의 성 평등 지수는 어떠할까? 
+                    버튼을 클릭하여 세계 평균, 1위를 차지한 아이슬란드, 꼴찌를 차지한 예멘과 비교해보자.
                 </p>
                 <p>
-                    실제로 2017년 세계 성 평등 지수 보고서에서 한국은 144개국 중 118위를 차지했다. 최하위권인 셈이다.
-                    1위를 차지한 아이슬란드와 144위를 차지한 예멘과 비교하면 한국의 위치를 좀 더 명확히 알 수 있다.
-                </p>
-                <p>
-                    한국은 과연 
+                    우리나라의 성 평등 지수는 모든 부문에서 평균을 밑돌고 있다. 
+                    실제로 종합 지수에서 우리나라는 144개국 중 118위를 차지했다. 최하위권인 셈이다.
                 </p>
             </div>
-        </article>  
-    </section>     
+        </article>
+    </section>
     <section class=category>
+        <div class=outer>
+            <p>
+                다음으로, 우리나라와 경제적, 사회적으로 유사한 나라들과 우리나라의 성 평등 지수를 비교해보자.
+                1인당 GDP, 출생률, 민주주의 지수의 세 가지 지표를 기준으로 각 지표와 성 평등 지수의 상관관계를 알아보고,
+                지표별로 한국과 유사한 값을 지니는 국가들의 성 평등 지수는 어떠한지 살펴본다.
+            </p>
+        </div>
         <article class=index>
             <div class=GDPPC>
                 <div class=name id=GDPPCname>GDP per capita(GDPPC)</div>
@@ -273,16 +304,20 @@
         </article>
     </section>
     <section class=category id=conclusion>
-        <div class=desc>
-            <p></p>
+        <div class=outer>
+            <p>
+                1인당 GDP, 출생률, 민주주의 지수 등 사회⋅경제적 지표들과 성 평등 지수는 크게 상관관계를 보이지 않았다.
+                그렇기에 이들 지표를 기준으로 한국과 다른 나라의 성 평등 지수를 비교하는 데에는 무리가 있다.
+                하지만, 그럼에도 지표별로 한국과 유사한 나라들 가운데 한국은 성 격차가 가장 심한 나라 중 하나라는 점을 알 수 있었다.
+                양성 간의 격차를 좀 더 줄이고 성 평등 지수 최하위권을 벗어나기 위한 개선의 노력이 절실하다.
+            </p>
         </div>
         <div class=source>
             (reference: http://project.newsjel.ly/governments/)
         </div>
     </section>
     
-    <script src="index.js"></script>
-    <script src='circle.js'></script>
+    <script src="bar.js"></script>
     <script src='scatter2.js'></script>
 </body>
 </html>
